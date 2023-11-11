@@ -23,8 +23,8 @@ class Spell(
         @Field(type = FieldType.Text)
         val school: String,
 
-        @Field(type = FieldType.Integer)
-        val distance: Int,
+        @Field(type = FieldType.Text)
+        val distance: String,
 
         @Field(type = FieldType.Text)
         val components: List<String>,

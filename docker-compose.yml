@@ -2,11 +2,12 @@ version: '3'
 services:
   elasticsearch:
     container_name: elasticsearch
-    image: elastic/elasticsearch:8.10.4
-    # 8.x
-    environment: ['CLI_JAVA_OPTS=-Xms2g -Xmx2g','bootstrap.memory_lock=true','discovery.type=single-node','xpack.security.enabled=false', 'xpack.security.enrollment.enabled=false']
+    image: elastic/elasticsearch:7.17.4
+    environment:
+      - xpack.security.enabled=false
+      - discovery.type=single-node
     ports:
-      - 9200:9200
+      - "9200:9200"
     networks:
       - elastic
     ulimits:
@@ -16,6 +17,8 @@ services:
       nofile:
         soft: 65536
         hard: 65536
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
     deploy:
       resources:
         limits:
@@ -24,12 +27,12 @@ services:
           cpus: '1.0'
 
   kibana:
-    image: elastic/kibana:8.10.4
+    image: elastic/kibana:7.17.4
     container_name: kibana
     environment:
       XPACK_ENCRYPTEDSAVEDOBJECTS_ENCRYPTIONKEY: d1a66dfd-c4d3-4a0a-8290-2abcb83ab3aa
     ports:
-      - 5601:5601
+      - "5601:5601"
     networks:
       - elastic
     deploy:
@@ -41,3 +44,7 @@ services:
 
 networks:
   elastic:
+
+volumes:
+  elasticsearch-data:
+    driver: local
