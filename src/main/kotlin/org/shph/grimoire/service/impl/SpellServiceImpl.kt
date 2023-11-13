@@ -1,13 +1,14 @@
 package org.shph.grimoire.service.impl
 
+import org.elasticsearch.common.unit.Fuzziness
+import org.elasticsearch.index.query.BoolQueryBuilder
+import org.elasticsearch.index.query.QueryBuilders
 import org.shph.grimoire.controller.dto.SpellSearchDto
 import org.shph.grimoire.entity.Spell
 import org.shph.grimoire.repository.SpellRepository
 import org.shph.grimoire.service.SpellService
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations
-import org.springframework.data.elasticsearch.core.SearchHit
-import org.springframework.data.elasticsearch.core.query.Criteria
-import org.springframework.data.elasticsearch.core.query.CriteriaQuery
+import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder
 import org.springframework.stereotype.Service
 
 @Service
@@ -20,27 +21,34 @@ class SpellServiceImpl(
     }
 
     override fun search(searchDto: SpellSearchDto): List<Spell> {
-        var criteria = Criteria()
+        var queryBuilder = NativeSearchQueryBuilder()
+
         if (searchDto.name?.isNotEmpty() == true) {
-            criteria = criteria.and(Criteria("name").contains(searchDto.name).boost(100.0f)
-                .or("description").contains(searchDto.name))
+            queryBuilder = queryBuilder.withQuery(
+                QueryBuilders.multiMatchQuery(searchDto.name)
+                .field("name", 10f)
+                .field("description")
+                .fuzziness(Fuzziness.AUTO)
+            )
         }
 
         if (searchDto.characterClass?.isNotEmpty() == true) {
-            criteria = criteria.and(Criteria("classes").contains(searchDto.characterClass))
+            queryBuilder = queryBuilder.withQuery(
+                BoolQueryBuilder().must(QueryBuilders.termQuery("classes", searchDto.characterClass)))
         }
 
         if (searchDto.school?.isNotEmpty() == true) {
-            criteria = criteria.and(Criteria("school").`is`(searchDto.school))
+            queryBuilder = queryBuilder.withQuery(
+                BoolQueryBuilder().must(QueryBuilders.termQuery("school", searchDto.school)))
         }
 
-        if (searchDto.level != null && searchDto.level != -1){
-            criteria = criteria.and(Criteria("level").`is`(searchDto.level.toString()))
+        if (searchDto.level != null && searchDto.level != -1) {
+            queryBuilder = queryBuilder.withQuery(
+                BoolQueryBuilder().must(QueryBuilders.termQuery("level", searchDto.level)))
         }
 
-        val query = CriteriaQuery(criteria)
+        val query = queryBuilder.build()
         val searchHits = elasticsearchOperations.search(query, Spell::class.java)
-
         return searchHits.map { it.content }.toList()
     }
 }

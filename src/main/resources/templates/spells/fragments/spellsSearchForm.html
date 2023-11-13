@@ -1,29 +1,33 @@
 <div th:fragment="spellsSearchForm">
     <form action="#" th:action="@{/spells/search}" th:object="${spellSearchDto}" method="post">
         <div class="row row-cols-1 row-cols-sm-5">
+
             <div class="col mb-1">
-                <input th:field="*{name}" class="form-control form-control-sm" type="text" placeholder="Название" aria-label="Название">
+                <label for="name" class="form-label">Название</label>
+                <input th:field="*{name}" class="form-control form-control-sm" type="text" id="name" placeholder="Название" aria-label="Название">
             </div>
 
             <div class="col mb-1">
-                <select th:field="*{level}" class="form-select form-select-sm" aria-label="Уровень заклинания">
-                    <option selected th:value="-1">Уровень</option>
+                <label for="level" class="form-label">Уровень</label>
+                <select th:field="*{level}" class="form-select form-select-sm" aria-label="Уровень заклинания" id="level">
+                    <option selected th:value="null"></option>
                     <option th:value="0">Заговоры</option>
                     <option th:value="1">1</option>
                     <option th:value="2">2</option>
-                    <option th:value="1">3</option>
-                    <option th:value="1">4</option>
-                    <option th:value="1">5</option>
-                    <option th:value="1">6</option>
-                    <option th:value="1">7</option>
-                    <option th:value="1">8</option>
-                    <option th:value="3">9</option>
+                    <option th:value="3">3</option>
+                    <option th:value="4">4</option>
+                    <option th:value="5">5</option>
+                    <option th:value="6">6</option>
+                    <option th:value="7">7</option>
+                    <option th:value="8">8</option>
+                    <option th:value="9">9</option>
                 </select>
             </div>
 
             <div class="col mb-1">
-                <select th:field="*{characterClass}"  class="form-select form-select-sm" aria-label="Класс">
-                    <option selected th:value="">Класс</option>
+                <label for="characterClass" class="form-label">Класс</label>
+                <select th:field="*{characterClass}" id="characterClass" class="form-select form-select-sm" aria-label="Класс">
+                    <option selected th:value="null"></option>
                     <option th:value="Волшебник">Волшебник</option>
                     <option th:value="Бард">Бард</option>
                     <option th:value="Друид">Друид</option>
@@ -37,8 +41,9 @@
             </div>
 
             <div class="col mb-1">
-                <select th:field="*{school}" class="form-select form-select-sm" aria-label="Школа">
-                    <option selected th:value="">Школа</option>
+                <label for="school" class="form-label">Школа</label>
+                <select th:field="*{school}" id="school" class="form-select form-select-sm" aria-label="Школа">
+                    <option selected th:value="null"></option>
                     <option th:value="Волшебник">Воплощение</option>
                     <option th:value="Бард">Вызов</option>
                     <option th:value="Друид">Иллюзия</option>
@@ -50,10 +55,12 @@
                 </select>
             </div>
 
-            <div class="col d-grid gap-2 mb-1">
-                <button type="submit" class="btn btn-primary btn-sm">Искать</button>
+            <div class="col d-grid gap-2 align-items-end mb-1">
+                <div class="btn-group">
+                    <button type="reset" class="btn btn-outline-dark btn-sm">Очистить</button>
+                    <button type="submit" class="btn btn-dark btn-sm">Искать</button>
+                </div>
             </div>
-
         </div>
     </form>
 </div>

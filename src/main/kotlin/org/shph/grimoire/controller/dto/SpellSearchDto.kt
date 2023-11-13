@@ -1,8 +1,8 @@
 package org.shph.grimoire.controller.dto
 
 data class SpellSearchDto(
-    val name: String?,
-    val level: Int?,
-    val characterClass: String?,
-    val school: String?
+    val name: String? = null,
+    val level: Int? = null,
+    val characterClass: String? = null,
+    val school: String? = null
 )
