@@ -33,13 +33,11 @@ class SpellServiceImpl(
         }
 
         if (searchDto.characterClass?.isNotEmpty() == true) {
-            queryBuilder = queryBuilder.withQuery(
-                BoolQueryBuilder().must(QueryBuilders.termQuery("classes", searchDto.characterClass)))
+            queryBuilder = queryBuilder.withQuery(QueryBuilders.matchQuery("classes", searchDto.characterClass))
         }
 
         if (searchDto.school?.isNotEmpty() == true) {
-            queryBuilder = queryBuilder.withQuery(
-                BoolQueryBuilder().must(QueryBuilders.termQuery("school", searchDto.school)))
+            queryBuilder = queryBuilder.withQuery(QueryBuilders.matchQuery("school", searchDto.school))
         }
 
         if (searchDto.level != null && searchDto.level != -1) {

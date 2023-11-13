@@ -33,7 +33,8 @@ class SpellController(
     @GetMapping("/{id}")
     fun getSpellDetail(@PathVariable id: UUID, model: Model): String {
         //TODO: show error page 404 on no spell
-        model.addAttribute("spell", spellRepository.findById(id).get())
+        val spell = spellRepository.findById(id).get()
+        model.addAttribute("spell", spellResponseDtoAssembler.convert(spell))
         return "spells/spellDetail"
     }
 
@@ -54,8 +55,9 @@ class SpellController(
 
         val fireBolt = Spell(
             UUID.randomUUID(),
-            "Огненный наряд",
+            "Огненный снаряд",
             "1к10 урон огнем",
+            "1 действие",
             0,
             "Воплощение",
             "120 фт.",
@@ -63,7 +65,8 @@ class SpellController(
             "1 ход",
             listOf("Волшебник", "Чародей"),
             listOf("Волшебник", "Чародей"),
-            "PHB"
+            "PHB",
+            false
         )
         spellRepository.save(fireBolt)
 
@@ -72,14 +75,16 @@ class SpellController(
             UUID.randomUUID(),
             "Огненный шар",
             "8к6 урон огнем в рудиусе 20 фт.",
+            "1 действие",
             3,
             "Воплощение",
             "120 фт.",
             listOf("В", "С", "М"),
             "1 ход",
-            listOf("Волшебник", "Чародей"),
-            listOf("Волшебник", "Чародей"),
-            "PHB"
+            listOf("Волшебник", "Колдун"),
+            listOf("Волшебник", "Колдун"),
+            "PHB",
+            false
         )
         spellRepository.save(fireBall)
 
@@ -88,6 +93,7 @@ class SpellController(
             UUID.randomUUID(),
             "Луч холода",
             "1к8 урон холода",
+            "1 действие",
             0,
             "Воплощение",
             "120 фт.",
@@ -95,7 +101,8 @@ class SpellController(
             "1 ход",
             listOf("Волшебник", "Чародей", "Колдун"),
             listOf("Волшебник", "Чародей", "Колдун"),
-            "PHB"
+            "PHB",
+            false
         )
         spellRepository.save(rayOfFrost)
 
@@ -103,14 +110,16 @@ class SpellController(
             UUID.randomUUID(),
             "Конус холода",
             "4к10 урон холода",
+            "1 действие",
             4,
             "Воплощение",
             "120 фт.",
             listOf("В", "С", "М"),
             "1 ход",
             listOf("Бард"),
-            listOf("Волшебник", "Чародей", "Колдун"),
-            "PHB"
+            listOf("Бард"),
+            "PHB",
+            false
         )
         spellRepository.save(coneOfCold)
 

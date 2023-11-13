@@ -11,6 +11,7 @@ class SpellResponseDtoAssembler: ResponseDtoAssembler<Spell, SpellResponseDto> {
             entity.id,
             entity.name,
             entity.description,
+            entity.castTime,
             entity.level,
             entity.school,
             entity.distance,
@@ -18,7 +19,8 @@ class SpellResponseDtoAssembler: ResponseDtoAssembler<Spell, SpellResponseDto> {
             entity.duration,
             entity.classes.joinToString(", "),
             entity.archetypes.joinToString(", "),
-            entity.source
+            entity.source,
+            entity.ritual
         )
     }
 }

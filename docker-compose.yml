@@ -2,7 +2,7 @@ version: '3'
 services:
   elasticsearch:
     container_name: elasticsearch
-    image: elastic/elasticsearch:7.17.4
+    image: elastic/elasticsearch:7.17.10
     environment:
       - xpack.security.enabled=false
       - discovery.type=single-node
@@ -27,7 +27,7 @@ services:
           cpus: '1.0'
 
   kibana:
-    image: elastic/kibana:7.17.4
+    image: elastic/kibana:7.17.10
     container_name: kibana
     environment:
       XPACK_ENCRYPTEDSAVEDOBJECTS_ENCRYPTIONKEY: d1a66dfd-c4d3-4a0a-8290-2abcb83ab3aa

@@ -17,6 +17,9 @@ class Spell(
         @Field(type = FieldType.Text)
         val description: String,
 
+        @Field(type = FieldType.Text)
+        val castTime: String,
+
         @Field(type = FieldType.Integer)
         val level: Int,
 
@@ -40,4 +43,7 @@ class Spell(
 
         @Field(type = FieldType.Text)
         val source: String,
+
+        @Field(type = FieldType.Boolean)
+        val ritual: Boolean
 )

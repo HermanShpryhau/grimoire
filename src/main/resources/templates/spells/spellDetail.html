@@ -12,8 +12,20 @@
 </div>
 
 <div class="container-lg">
-    <h1 class="mt-2 mb-3" th:text="${spell.name}"></h1>
+    <h1 class="mt-3" th:text="${spell.name}"></h1>
+    <p><em th:text="${spell.level} + ' уровень, ' + ${spell.school}"></em></p>
 
+    <p>
+        <b>Время накладывания: </b> <span th:text="${spell.duration}"></span> <br/>
+        <b>Дистанция: </b> <span th:text="${spell.castTime}"></span> <br/>
+        <b>Компоненты: </b> <span th:text="${spell.components}"></span> <br/>
+        <b>Длительность: </b> <span th:text="${spell.duration}"></span> <br/>
+        <b>Классы: </b> <span th:text="${spell.classes}"></span> <br/>
+        <b>Архетипы: </b> <span th:text="${spell.archetypes}"></span> <br/>
+        <b>Источник: </b> <span th:text="${spell.source}"></span> <br/>
+    </p>
+
+    <h5>Описание</h5>
     <p th:text="${spell.description}"></p>
 </div>
 
