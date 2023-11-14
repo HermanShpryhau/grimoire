@@ -35,6 +35,7 @@ class SpellController(
         //TODO: show error page 404 on no spell
         val spell = spellRepository.findById(id).get()
         model.addAttribute("spell", spellResponseDtoAssembler.convert(spell))
+        model.addAttribute("spellSearchDto", SpellSearchDto())
         return "spells/spellDetail"
     }
 
@@ -70,7 +71,6 @@ class SpellController(
         )
         spellRepository.save(fireBolt)
 
-
         val fireBall = Spell(
             UUID.randomUUID(),
             "Огненный шар",
@@ -87,7 +87,6 @@ class SpellController(
             false
         )
         spellRepository.save(fireBall)
-
 
         val rayOfFrost = Spell(
             UUID.randomUUID(),
